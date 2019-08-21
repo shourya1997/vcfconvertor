@@ -21,5 +21,14 @@ if __name__ == "__main__":
         # convert to vcf
         input_format = qw.input_format
         vcf_filename = vcfconvert.convert_to_vcard(result, input_format)
+        print(vcf_filename)
+        uploaded = qw.upload_to_aws(vcf_filename, 'kamailionumbers', vcf_filename)
+
+        if uploaded:
+            # TODO: send mail with download link of VCARD
+            pass
+        else:
+            pass 
+
     else:
         print("No Update in Contacts")

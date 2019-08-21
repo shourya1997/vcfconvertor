@@ -13,28 +13,34 @@ def to_hash(filepath):
 
 def hash_compare():
     directory = 'query_files/'
-    creation = dict()
 
-    for filename in os.listdir(directory):
-        if filename.endswith(".txt"):
-            date_creation = filename[:len(filename)-4].split('_')
-            dc = datetime.strptime(date_creation[1], '%Y-%m-%d|%H:%M:%S')
-            creation.update({dc:filename})
-        
-    creation_sorted = sorted(creation.keys(), reverse = True)
-    latest_query_file = creation[creation_sorted[0]]
-    old_query_file = creation[creation_sorted[1]]
+    if len(os.listdir(directory)) < 1:
+        print("Empty folder")
 
-    latest_query_file_path = directory + str(latest_query_file)
-    old_query_file_path = directory + str(old_query_file)
-
-    latest_query_hash = to_hash(latest_query_file_path)
-    old_query_hash = to_hash(old_query_file_path)
-
-    if latest_query_hash != old_query_hash:
-        print("DB Updated")
+    elif len(os.listdir(directory)) == 1:
         return True
+
+    else:
+        creation = dict() # dict key: date to creation, value:filename
+         
+        for filename in os.listdir(directory):
+            if filename.endswith(".txt"):
+                date_creation = filename[:len(filename)-4].split('_') # spliting filname to get date of creation
+                dc = datetime.strptime(date_creation[1], '%Y-%m-%d|%H:%M:%S') # converting to datetime
+                creation.update({dc:filename})
+            
+        creation_sorted = sorted(creation.keys(), reverse = True) # DESC sorting, of file creation datetime
+        latest_query_file = creation[creation_sorted[0]] # lastest/last file
+        old_query_file = creation[creation_sorted[1]] # 2nd last file
+
+        latest_query_file_path = directory + str(latest_query_file)
+        old_query_file_path = directory + str(old_query_file)
+
+        latest_query_hash = to_hash(latest_query_file_path)
+        old_query_hash = to_hash(old_query_file_path)
+
+        if latest_query_hash != old_query_hash:
+            print("DB Updated")
+            return True
     
     return False
-
-
