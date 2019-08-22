@@ -21,7 +21,7 @@ def hash_compare():
         return True
 
     else:
-        creation = dict() # dict key: date to creation, value:filename
+        creation = dict() # dict key: date of creation, value:filename
          
         for filename in os.listdir(directory):
             if filename.endswith(".txt"):
@@ -42,5 +42,7 @@ def hash_compare():
         if latest_query_hash != old_query_hash:
             print("DB Updated")
             return True
+        elif latest_query_hash == old_query_hash:
+            os.remove(latest_query_file_path) # if no update in DB then delete the latest created file to avoid duplication
     
     return False
