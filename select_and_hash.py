@@ -17,7 +17,7 @@ def hash_compare():
     if len(os.listdir(directory)) < 1:
         print("Empty folder")
 
-    elif len(os.listdir(directory)) == 1:
+    elif len(os.listdir(directory)) == 2:
         return True
 
     else:
