@@ -6,23 +6,24 @@ import pymysql as mc
 import boto3
 from botocore.exceptions import NoCredentialsError
 
-import smtplib
-from email.message import EmailMessage
+import mandrill
 
-def send_email(message):
-    print("Sending Mail...")
-    msg = EmailMessage()
-    msg['Subject'] = subject
-    msg['From'] = fromEmail
-    msg['To'] = toEmail
-    msg.set_content(message)
-
+def send_email(messages):
+    mandrill_client = mandrill.Mandrill(mandrill_key)
     try:
-        with smtplib.SMTP_SSL('smtp.gmail.com',465) as smtp:
-            smtp.login(fromEmail, fromEmailPass)
-            smtp.send_message(msg)
-        print("Mail Sent")
-    except Exception as e:
+        message = {'from_mail': fromEmail,
+                    'from_name': name,
+                    'to':[{
+                        'email': toEmail,
+                        'type': 'to',
+                    }],
+                    'subject': subject,
+                    'html': messages,
+                    'header': {'X-MC-PreserveRecipients': False}
+                    }
+        result = mandrill_client.messages.send(message = message)
+
+    except mandrill.Error as e:
         print("Error in sending mail:",e)
     
 
@@ -86,10 +87,11 @@ access_key = config['AWS']['S3']['accessKey']
 secret_key = config['AWS']['S3']['secretKey']
 bucket = config['AWS']['S3']['bucket']
 
+mandrill_key = config['email']['mandrillKey']
 subject = config['email']['subject']
-fromEmail = config['email']['from']['username']
-fromEmailPass = config['email']['from']['pass']
+fromEmail = config['email']['from']
 toEmail = config['email']['to']
+name = config['email']['name']
 
 ACCESS_KEY = access_key
 SECRET_KEY = secret_key
