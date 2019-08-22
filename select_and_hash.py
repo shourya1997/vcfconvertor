@@ -43,6 +43,7 @@ def hash_compare():
             print("DB Updated")
             return True
         elif latest_query_hash == old_query_hash:
-            os.remove(latest_query_file_path) # if no update in DB then delete the latest created file to avoid duplication
+            # if no update in DB then delete the latest created file to avoid duplication
+            os.remove(latest_query_file_path)
     
     return False

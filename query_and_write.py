@@ -9,9 +9,10 @@ from botocore.exceptions import NoCredentialsError
 def upload_to_aws(local_file, s3_file):
     s3 = boto3.client('s3', aws_access_key_id=ACCESS_KEY,
                       aws_secret_access_key=SECRET_KEY)
+    
     bucket = BUCKET
     try:
-        s3.upload_file(local_file, bucket, s3_file)
+        s3.upload_file(local_file, bucket, s3_file, ExtraArgs={'ACL':'public-read'})
         print("Upload Successful")
         return True
     except FileNotFoundError:
@@ -61,3 +62,4 @@ bucket = config['AWS']['S3']['bucket']
 ACCESS_KEY = access_key
 SECRET_KEY = secret_key
 BUCKET = bucket
+
