@@ -1,17 +1,28 @@
 database:
-        host: xxx
-        username: xxx
-        password: xx@
-        db_name: call_records
+        host: localhost
+        username: root
+        password: root
+        db_name: phone_numbers
 
-# table name
-table_name: 'phone_numbers'
+table:
+        name: 'numbers'
+        name_column: 'route'
+        number_column: 'number'
+        where: "id = '1'"
+
 
 # input data format of records (query result format)
 input_format: '{"name":1, "tel":2}'
 
 AWS:
    S3:
-     accessKey : yoyoy
-     secretKey : paji
-     bucket: dkc
+     accessKey : access denied
+     secretKey : secret is out
+     bucket: bucket is full of water
+
+email:
+     from: 
+        username: your@email.com
+        pass: yourpassword
+     subject: "VCard Contact List Updated"
+     to: to@gmail.com
