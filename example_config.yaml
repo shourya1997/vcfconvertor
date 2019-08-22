@@ -1,0 +1,28 @@
+database:
+        host: localhost
+        username: root
+        password: root
+        db_name: phone_numbers
+
+table:
+        name: 'numbers'
+        name_column: 'route'
+        number_column: 'number'
+        where: "id = '1'"
+
+
+# input data format of records (query result format)
+input_format: '{"name":1, "tel":2}'
+
+AWS:
+   S3:
+     accessKey : access denied
+     secretKey : secret is out
+     bucket: bucket is full of water
+
+email: 
+     mandrillKey: 'xyz'
+     from: your@email.com
+     name: Gumname
+     subject: 'VCard Contact List Updated'
+     to: to@email.com
