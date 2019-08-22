@@ -29,10 +29,10 @@ if __name__ == "__main__":
         uploaded = qw.upload_to_aws(vcf_filename, s3_filename)
         
         if uploaded:
-            # TODO: send mail with download link of VCARD
-            pass
+            message = "MyOperator VCard has been Update for the following date:" + str(time.strftime("%Y-%m-%d %H:%M:%S"), time.localtime()) + ". Please download it from the link shared."
+            qw.send_email(message)
         else:
-            pass 
+            pass
 
     else:
         print("No Update in Contacts")

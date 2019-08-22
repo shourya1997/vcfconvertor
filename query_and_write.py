@@ -6,6 +6,26 @@ import pymysql as mc
 import boto3
 from botocore.exceptions import NoCredentialsError
 
+import smtplib
+from email.message import EmailMessage
+
+def send_email(message):
+    print("Sending Mail...")
+    msg = EmailMessage()
+    msg['Subject'] = subject
+    msg['From'] = fromEmail
+    msg['To'] = toEmail
+    msg.set_content(message)
+
+    try:
+        with smtplib.SMTP_SSL('smtp.gmail.com',465) as smtp:
+            smtp.login(fromEmail, fromEmailPass)
+            smtp.send_message(msg)
+        print("Mail Sent")
+    except Exception as e:
+        print("Error in sending mail:",e)
+    
+
 def upload_to_aws(local_file, s3_file):
     s3 = boto3.client('s3', aws_access_key_id=ACCESS_KEY,
                       aws_secret_access_key=SECRET_KEY)
@@ -61,9 +81,15 @@ def load_config(fname):
 
 config = load_config("config.yaml")
 input_format = json.loads(config['input_format'])
+
 access_key = config['AWS']['S3']['accessKey']
 secret_key = config['AWS']['S3']['secretKey']
 bucket = config['AWS']['S3']['bucket']
+
+subject = config['email']['subject']
+fromEmail = config['email']['from']['username']
+fromEmailPass = config['email']['from']['pass']
+toEmail = config['email']['to']
 
 ACCESS_KEY = access_key
 SECRET_KEY = secret_key
