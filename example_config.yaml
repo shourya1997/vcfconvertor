@@ -14,3 +14,4 @@ AWS:
    S3:
      accessKey : yoyoy
      secretKey : paji
+     bucket: dkc
