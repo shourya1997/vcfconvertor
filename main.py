@@ -21,6 +21,9 @@ if __name__ == "__main__":
         # convert to vcf
         input_format = qw.input_format
         vcf_filename = vcfconvert.convert_to_vcard(result, input_format)
+
+        upload_old = qw.upload_to_aws(vcf_filename, vcf_filename)
+        
         s3_filename = 'myoperator_numbers.vcf'
         
         uploaded = qw.upload_to_aws(vcf_filename, s3_filename)
