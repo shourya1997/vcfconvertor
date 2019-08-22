@@ -39,7 +39,13 @@ def getDBconnection():
         print("Error while connecting to DB: {}".format(e))
 
 def query_return():
-    query = "SELECT * FROM " + str(config['table_name'])
+    query = "SELECT {name}, {number} FROM {table}".format(table=str(config['table']['name']), number=config['table']['number_column'], name=config['table']['name_column'])
+    try:
+        where = config['table']['where']
+        query = "{query} WHERE {where}".format(where=where, query=query)
+    except:
+        pass
+
     cnx = getDBconnection()
     try:
         cursor = cnx.cursor()

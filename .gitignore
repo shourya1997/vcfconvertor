@@ -2,3 +2,4 @@
 config.yaml
 query_files/
 vcard/
+__pycache__/
